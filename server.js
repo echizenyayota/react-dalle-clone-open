@@ -18,7 +18,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-
 app.post("/images", async(req, res) => {
   try {
     const response = await oepnai.createImage({
@@ -26,7 +25,7 @@ app.post("/images", async(req, res) => {
       n: 2, 
       size: "1024×1024",
     });
-    console.log(response);
+    console.log(response.data.data);
     res.send(response.data.data);
   } catch(error) {
     console.error(error);
