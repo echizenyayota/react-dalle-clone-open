@@ -20,7 +20,7 @@ app.post("/images", async (req, res) => {
   try {
     const response = await openai.images.generate({ 
       model: "dall-e-3", 
-      prompt: "A cute baby sea otter",
+      prompt: req.body.message,
       n: 1,
     });
     console.log(response.data);
