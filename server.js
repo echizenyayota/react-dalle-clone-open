@@ -1,14 +1,17 @@
 const PORT = 8000;
+require("dotenv").config();
 const OpenAI = require('openai');
 const express = require("express");
 const cors = require("cors");
 // If you set environment variable process.env.OPENAI_API_KEY,
 // the env variable will be automatically picked.
-const openai = new OpenAI();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 const app = express();
 app.use(cors());
 app.use(express.json());
-require("dotenv").config();
+
 
 app.get("/", (req, res) => {
   res.status(200).json({
