@@ -12,7 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Testing whether the API works"
@@ -21,12 +20,12 @@ app.get("/", (req, res) => {
 
 app.post("/images", async (req, res) => {
   try {
-    const image = await openai.images.generate({ 
+    const response = await openai.images.generate({ 
       model: "dall-e-3", 
       prompt: "A cute baby sea otter" 
     });
-    console.log(response.data.data);
-    res.send(response.data.data);
+    console.log(response.data);
+    res.send(response.data);
   } catch(error) {
     console.error(error);
   }
