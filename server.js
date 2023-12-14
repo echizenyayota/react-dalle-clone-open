@@ -3,8 +3,6 @@ require("dotenv").config();
 const OpenAI = require('openai');
 const express = require("express");
 const cors = require("cors");
-// If you set environment variable process.env.OPENAI_API_KEY,
-// the env variable will be automatically picked.
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
@@ -22,7 +20,8 @@ app.post("/images", async (req, res) => {
   try {
     const response = await openai.images.generate({ 
       model: "dall-e-3", 
-      prompt: "A cute baby sea otter" 
+      prompt: "A cute baby sea otter",
+      n: 2,
     });
     console.log(response.data);
     res.send(response.data);
