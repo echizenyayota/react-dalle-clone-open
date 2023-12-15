@@ -60,6 +60,13 @@ const App = () => {
           />
           <button onClick={getImages}>Generate</button>
         </div>
+        <p className="extra-info">Or, 
+          <span>
+            <label htmlFor="files">Upload an image </label>
+            <input id="files" accept="image/*" type="file" hidden/>
+          </span>
+          to edit.
+        </p>
         {error && <p>{error}</p>}
       </section>
       <section className="image-section">
