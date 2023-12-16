@@ -5,6 +5,7 @@ const App = () => {
   const [images, setImages] = useState(null);
   const [value, setValue] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const surpriseOptions = [
     "A blue ostrich eating melon",
@@ -20,10 +21,12 @@ const App = () => {
 
   const getImages = async() => {
     setImages(null);
+
     if(value === null) {
       setError("Error! Must have a search term");
       return;
     }
+
     try {
       const options = {
         method: "POST",
@@ -35,16 +38,36 @@ const App = () => {
         },
 
       }
+
       const response = await fetch('http://localhost:8000/images', options);
       const data = await response.json();
       console.log(data);
       setImages(data);
+
     } catch(error) {
       console.error(error);
     } 
   }
 
-  console.log(value);
+  const uploadImage = async (e) => {
+    console.log(e.target.files[0]);
+
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    setSelectedImage(e.target.files[0]);
+    
+    try {
+      const options = {
+        method: "POST",
+        body: formData,
+      };
+      const response = await fetch('http://localhost:8000/upload', options);
+      const data = await response.json();
+      console.log(data);
+    } catch(error) {
+      console.error(error);
+    }
+   }
 
   return (
     <div className="app">
@@ -63,7 +86,7 @@ const App = () => {
         <p className="extra-info">Or, 
           <span>
             <label htmlFor="files">Upload an image </label>
-            <input id="files" accept="image/*" type="file" hidden/>
+            <input onChange={uploadImage} id="files" accept="image/*" type="file" hidden/>
           </span>
           to edit.
         </p>
