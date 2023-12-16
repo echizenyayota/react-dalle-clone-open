@@ -94,7 +94,11 @@ const App = () => {
         </p>
         {error && <p>{error}</p>}
         {modalOpen && <div className="overlay">
-          <Modal />
+          <Modal
+            setModalOpen={setModalOpen}
+            setSelectedImage={setSelectedImage}
+            selectedImage={selectedImage}
+          />
         </div>}
       </section>
       <section className="image-section">
