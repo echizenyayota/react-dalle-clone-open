@@ -58,7 +58,8 @@ const App = () => {
     formData.append('file', e.target.files[0]);
     setModalOpen(true);
     setSelectedImage(e.target.files[0]);
-    
+    e.target.value = null;
+
     try {
       const options = {
         method: "POST",
@@ -70,7 +71,30 @@ const App = () => {
     } catch(error) {
       console.error(error);
     }
-   }
+  }
+
+  const generateVariations = async () => {
+    setImages(null);
+    if (selectedImage === null) {
+      setError("Error! Must have an existing image");
+      setModalOpen(false);
+      return;
+    }
+    try {
+      const options = {
+        method: "POST",
+      };
+  
+      const response = await fetch('http://localhost:8000/variations', options);
+      const data = await response.json();
+      console.log(data);
+      setImages(data);
+      setError(null);
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="app">
@@ -99,6 +123,7 @@ const App = () => {
             setModalOpen={setModalOpen}
             setSelectedImage={setSelectedImage}
             selectedImage={selectedImage}
+            generateVariations={generateVariations}
           />
         </div>}
       </section>
