@@ -58,7 +58,7 @@ app.post("/upload", (req, res) => {
   });
 });
 
-app.post("/variations", async(res, req) => {
+app.post("/variations", async(req, res) => {
   try {
     const response = await openai.images.createVariation({
       image: fs.createReadStream(filePath),
